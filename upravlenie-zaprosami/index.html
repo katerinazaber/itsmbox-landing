@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Управление запросами на обслуживание по ITIL 4 — ITSMBox на базе BPMSoft</title>
+<meta name="description" content="Что такое управление запросами на обслуживание по ITIL 4, чем запрос отличается от инцидента и как устроен процесс. Как работает управление запросами в ITSMBox: каталог типовых обращений, маршруты, согласования и контроль SLA.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="yandex" content="noindex, nofollow">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/Fact-VF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Чем запрос на обслуживание отличается от инцидента?","acceptedAnswer":{"@type":"Answer","text":"Инцидент — незапланированное прерывание или снижение качества услуги, его нужно устранить. Запрос на обслуживание — заранее предусмотренная просьба пользователя: выдать доступ, оборудование, установить ПО или дать информацию. Сбоя нет, есть типовая услуга, которую нужно выполнить."}},
+    {"@type":"Question","name":"Нужен ли каталог услуг для управления запросами?","acceptedAnswer":{"@type":"Answer","text":"Да. Каталог определяет, какие запросы можно подать, какие данные для них нужны, кто согласует и кто исполняет. Без каталога запросы приходят в свободной форме, и их приходится разбирать вручную."}},
+    {"@type":"Question","name":"Можно ли настроить маршруты и согласования в ITSMBox без программирования?","acceptedAnswer":{"@type":"Answer","text":"Да. Маршрутные карты, схемы согласований, цели обслуживания, таблицы подстановок и шаблоны регистрации настраиваются no-code-инструментами, без разработки бизнес-процессов."}},
+    {"@type":"Question","name":"Через какие каналы пользователи подают запросы в ITSMBox?","acceptedAnswer":{"@type":"Answer","text":"Через портал самообслуживания и каталог типовых обращений, из карточки статьи базы знаний, через чат-бот, в том числе в Telegram. Специалисты поддержки также могут зарегистрировать обращение за пользователя."}}
+  ]
+}
+</script>
+</head>
+<body class="pg">
+
+<header class="hdr hdr--dark" id="top">
+  <div class="wrap hdr__in">
+    <a class="brand" href="../" aria-label="ITSMBox на базе BPMSoft — на главную">
+      <img src="../assets/img/bpm-logo.svg" width="146" height="32" alt="BPMSoft">
+      <span class="brand__sep" aria-hidden="true"></span>
+      <span class="brand__product">ITSM<b>Box</b></span>
+    </a>
+    <nav class="hdr__nav" aria-label="Разделы">
+      <a href="../#modules">Модули</a>
+      <a href="../#ai">ИИ</a>
+      <a href="../#why">Почему ITSMBox</a>
+      <a href="../#cases">Кейсы</a>
+      <a href="../#awards">Награды</a>
+    </nav>
+    <a class="btn btn--primary btn--sm" href="#form">Получить демо <svg class="i-arr" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5 15.5 10 11 14.5"/></svg></a>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero pg-hero" aria-labelledby="pg-title">
+  <div class="gridlines" aria-hidden="true"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Навигационная цепочка">
+      <a href="../">ITSMBox</a><span aria-hidden="true">/</span><a href="../#modules">Модули</a><span aria-hidden="true">/</span><span>Service Desk</span><span aria-hidden="true">/</span><span aria-current="page">Управление запросами</span>
+    </nav>
+  </div>
+  <div class="wrap hero__grid pg-hero__grid">
+    <div class="hero__copy">
+      <span class="kicker">Практика ITIL 4 · Service Desk</span>
+      <h1 id="pg-title" class="hero__title pg-hero__title">Управление запросами <span class="grad">на&nbsp;обслуживание</span></h1>
+      <p class="hero__lead">Типовые запросы сотрудников — доступы, оборудование, ПО, рабочие места — выполняются по&nbsp;заданному маршруту и&nbsp;в&nbsp;сроки SLA. Без ручной диспетчеризации и&nbsp;писем «где моя заявка».</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#form">Посмотреть в демо <svg class="i-arr" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5 15.5 10 11 14.5"/></svg></a>
+        <a class="btn btn--ghost-dark" href="#in-itsmbox">Как это работает в ITSMBox</a>
+      </div>
+    </div>
+    <div class="hero__media pg-hero__media">
+      <figure class="glass-card">
+        <div class="glass-card__bar" aria-hidden="true"><i></i><i></i><i></i><span>ITSMBox · Каталог типовых обращений</span></div>
+        <img src="../assets/img/scr-catalog.webp" width="1600" height="776" alt="Каталог типовых обращений в ITSMBox: группы запросов ИТ, АХО, управление доступом">
+      </figure>
+    </div>
+  </div>
+  <div class="wrap">
+    <ul class="pg-facts" aria-label="Коротко о процессе">
+      <li><b>Каталог</b><span>типовых обращений с&nbsp;поиском и&nbsp;автозаполнением формы</span></li>
+      <li><b>Маршруты</b><span>работ и&nbsp;схемы согласований без программирования</span></li>
+      <li><b>SLA / OLA</b><span>контрольные точки и&nbsp;уведомления до&nbsp;нарушения срока</span></li>
+      <li><b>Портал</b><span>и&nbsp;чат-бот: пользователь сам подаёт запрос и&nbsp;видит статус</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ARTICLE -->
+<section class="section pg-article" id="about" aria-labelledby="about-title">
+  <div class="wrap pg-article__grid">
+    <aside class="toc" aria-label="Содержание">
+      <p class="toc__t">Содержание</p>
+      <ol>
+        <li><a href="#what">Что это такое</a></li>
+        <li><a href="#vs-incident">Запрос или инцидент</a></li>
+        <li><a href="#examples">Примеры запросов</a></li>
+        <li><a href="#why-process">Зачем отдельный процесс</a></li>
+        <li><a href="#flow">Как устроен процесс</a></li>
+        <li><a href="#metrics">Что измерять</a></li>
+        <li><a href="#in-itsmbox">Управление запросами в ITSMBox</a></li>
+        <li><a href="#faq">Вопросы и ответы</a></li>
+      </ol>
+    </aside>
+
+    <article class="prose">
+      <span class="kicker">Статья</span>
+      <h2 id="about-title" class="h2">Что такое управление запросами на&nbsp;обслуживание</h2>
+
+      <h3 id="what">Определение по ITIL 4</h3>
+      <p>Управление запросами на обслуживание (Service Request Management) — одна из практик управления услугами в ITIL&nbsp;4. Её задача — поддерживать согласованное качество услуги, обрабатывая все заранее определённые запросы пользователей эффективно и&nbsp;удобно для них.</p>
+      <blockquote class="quote">
+        <p><b>Запрос на обслуживание</b> — запрос пользователя или его уполномоченного представителя, который инициирует действие, заранее согласованное как обычная часть предоставления услуги.</p>
+        <cite>ITIL&nbsp;4 Foundation, глоссарий (<a href="https://igen.nl/wp-content/uploads/2024/10/ITIL-4-Foundation_Glossary_Digital.pdf" target="_blank" rel="noopener nofollow">AXELOS / PeopleCert</a>)</cite>
+      </blockquote>
+      <p>Ключевое слово — «заранее». Запрос на обслуживание не&nbsp;сюрприз для ИТ-службы: известно, что именно попросят, какие данные нужны, кто согласует, кто выполнит и&nbsp;за&nbsp;какой срок. Поэтому такие запросы можно стандартизировать и&nbsp;автоматизировать.</p>
+
+      <h3 id="vs-incident">Запрос на обслуживание или инцидент</h3>
+      <p>В Service Desk оба типа обращений приходят в&nbsp;одно окно, но обрабатываются по-разному. Если их смешивать, срочные сбои теряются среди плановых заявок, а&nbsp;отчёты по SLA перестают отражать реальность.</p>
+      <div class="vs">
+        <div class="vs__col">
+          <p class="vs__t">Запрос на обслуживание</p>
+          <ul>
+            <li>Ничего не сломалось — нужна типовая услуга</li>
+            <li>Ожидаем и&nbsp;описан в&nbsp;каталоге заранее</li>
+            <li>Выполняется по&nbsp;стандартному маршруту, часто с&nbsp;согласованием</li>
+            <li>Пример: выдать доступ к&nbsp;1С, подготовить рабочее место</li>
+          </ul>
+        </div>
+        <div class="vs__col vs__col--alt">
+          <p class="vs__t">Инцидент</p>
+          <ul>
+            <li>Услуга прервалась или работает хуже</li>
+            <li>Незапланирован, сроки зависят от&nbsp;влияния и&nbsp;срочности</li>
+            <li>Цель — как можно быстрее восстановить работу</li>
+            <li>Пример: не открывается 1С, упала почта</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 id="examples">Примеры запросов на обслуживание</h3>
+      <ul class="ex-grid">
+        <li><b>Доступы</b><span>учётная запись, права в&nbsp;информационной системе, VPN, общие папки</span></li>
+        <li><b>Оборудование</b><span>ноутбук, монитор, гарнитура, замена картриджа</span></li>
+        <li><b>Программное обеспечение</b><span>установка, обновление, выдача лицензии</span></li>
+        <li><b>Рабочее место</b><span>выход нового сотрудника, переезд, увольнение</span></li>
+        <li><b>Информация</b><span>консультация, инструкция, справка по&nbsp;услуге</span></li>
+        <li><b>Смежные службы</b><span>заявки в&nbsp;АХО, кадры, безопасность — по&nbsp;той же логике</span></li>
+      </ul>
+
+      <h3 id="why-process">Зачем выделять запросы в&nbsp;отдельный процесс</h3>
+      <p>Типовые запросы — заметная часть ежедневного потока обращений в&nbsp;Service Desk. Когда у&nbsp;каждого из&nbsp;них есть шаблон, маршрут и&nbsp;срок, ИТ-служба получает:</p>
+      <ul class="checks">
+        <li><strong>Предсказуемые сроки.</strong> Для каждого типа запроса заданы цель обслуживания и&nbsp;контрольные точки.</li>
+        <li><strong>Меньше ручной работы.</strong> Форма заполняется по шаблону, исполнитель и&nbsp;согласующие назначаются автоматически.</li>
+        <li><strong>Самообслуживание.</strong> Пользователь сам выбирает услугу в&nbsp;каталоге и&nbsp;видит статус, не&nbsp;звоня в&nbsp;поддержку.</li>
+        <li><strong>Прозрачность нагрузки.</strong> Видно, какие запросы приходят чаще, где копятся очереди и&nbsp;кто перегружен.</li>
+        <li><strong>Основу для автоматизации.</strong> Стандартный запрос можно выполнять частично или полностью без участия инженера.</li>
+      </ul>
+
+      <h3 id="flow">Как устроен процесс</h3>
+      <ol class="flow">
+        <li><b>Регистрация.</b> Пользователь выбирает услугу в&nbsp;каталоге на портале, в&nbsp;чат-боте или обращается в&nbsp;Service Desk. Форма запроса уже знает, какие данные нужны.</li>
+        <li><b>Классификация и&nbsp;приоритет.</b> Запрос получает категорию, услугу и&nbsp;цель обслуживания по&nbsp;SLA.</li>
+        <li><b>Согласование.</b> Если запрос требует одобрения — например, доступ к&nbsp;финансовой системе, — он уходит руководителю или владельцу ресурса по&nbsp;заданной схеме.</li>
+        <li><b>Исполнение по маршруту.</b> Работы распределяются между группами в&nbsp;нужной последовательности, каждая со&nbsp;своим сроком.</li>
+        <li><b>Контроль сроков.</b> Система отслеживает контрольные точки SLA и&nbsp;OLA и&nbsp;предупреждает исполнителей заранее.</li>
+        <li><b>Закрытие и&nbsp;оценка.</b> Пользователь подтверждает результат и&nbsp;оценивает качество, данные попадают в&nbsp;отчётность.</li>
+      </ol>
+
+      <h3 id="metrics">Что измерять</h3>
+      <p>Чтобы понимать, работает ли процесс, ИТ-службы обычно отслеживают:</p>
+      <ul class="metrics">
+        <li>среднее время выполнения по каждому типу запроса;</li>
+        <li>долю запросов, выполненных в&nbsp;срок по&nbsp;SLA;</li>
+        <li>долю запросов, поданных через портал и&nbsp;чат-бот, а&nbsp;не&nbsp;по&nbsp;телефону и&nbsp;почте;</li>
+        <li>время на согласование — часто именно оно растягивает сроки;</li>
+        <li>оценку пользователей после закрытия запроса.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- IN ITSMBOX -->
+<section class="section pg-sys" id="in-itsmbox" aria-labelledby="sys-title">
+  <div class="wrap">
+    <div class="sec-head sec-head--split reveal">
+      <div>
+        <span class="kicker kicker--light">Функция в ITSMBox</span>
+        <h2 id="sys-title" class="h2 h2--light">Как управление запросами <span class="grad">работает в&nbsp;ITSMBox</span></h2>
+      </div>
+      <p class="pg-sys__lead">От выбора услуги в&nbsp;каталоге до&nbsp;закрытия запроса — в&nbsp;одной системе. Маршруты, согласования и&nbsp;сроки настраиваются без программирования.</p>
+    </div>
+
+    <div class="steps reveal" data-steps>
+      <ul class="steps__list">
+        <li><button class="step is-active" data-shot="scr-catalog" data-label="Каталог типовых обращений" aria-expanded="true"><span class="step__n">01</span><span class="step__t">Пользователь выбирает услугу</span><span class="step__d">Многоуровневый каталог типовых обращений с поиском. После выбора услуги форма регистрации заполняется автоматически. Можно подать запрос за другого сотрудника.</span></button></li>
+        <li><button class="step" data-shot="scr-routes" data-label="Настройки маршрута работ" aria-expanded="false"><span class="step__n">02</span><span class="step__t">Система запускает маршрут</span><span class="step__d">Маршрутная карта активируется по атрибутам обращения: перечень работ, зависимости, сроки и исполнители. Если нужно согласование, включается схема согласований с этапами и эскалацией.</span></button></li>
+        <li><button class="step" data-shot="scr-portal" data-label="Портал пользователей" aria-expanded="false"><span class="step__n">03</span><span class="step__t">Пользователь видит статус</span><span class="step__d">На портале видны все этапы согласования и ход работ. Блок «Требуются ваши действия» собирает то, что ждёт реакции: согласовать, дополнить, подтвердить решение.</span></button></li>
+      </ul>
+      <figure class="frame shot steps__shot"><div class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><span class="shot__label">Каталог типовых обращений</span></div><img src="../assets/img/scr-catalog.webp" width="1600" height="776" alt="Скриншот ITSMBox: каталог типовых обращений"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section pg-feat" aria-labelledby="feat-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">Возможности</span>
+      <h2 id="feat-title" class="h2">Что входит в&nbsp;управление запросами <span class="grad">ITSMBox</span></h2>
+    </div>
+    <div class="feat-grid">
+      <article class="aw reveal">
+        <span class="ic-sq"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v6H4z M13 5h7v6h-7z M4 13h7v6H4z M13 13h7v6h-7z"/></svg></span>
+        <h3>Каталог типовых обращений</h3>
+        <p>Группы и категории без ограничения по уровням, поиск по каталогу, автозаполнение формы. Шаблоны регистрации задают значения по умолчанию.</p>
+      </article>
+      <article class="aw reveal">
+        <span class="ic-sq"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h5v4H4z M15 14h5v4h-5z M9 8h3a2 2 0 012 2v4a2 2 0 002 2"/></svg></span>
+        <h3>Маршрутные карты</h3>
+        <p>Произвольные маршруты исполнения стандартных запросов: работы, зависимости, сроки, исполнители. Условия активации — по атрибутам обращения.</p>
+      </article>
+      <article class="aw reveal">
+        <span class="ic-sq"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4 4 10-10 M5 6h6 M5 18h4"/></svg></span>
+        <h3>Схемы согласований</h3>
+        <p>Этапы, последовательность, сроки и эскалация. Согласующий и группа согласования задаются отдельно, у схем есть приоритеты для сложных случаев.</p>
+      </article>
+      <article class="aw reveal">
+        <span class="ic-sq"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0111 0 M16 11l2 2 3.5-3.5"/></svg></span>
+        <h3>Автоназначение исполнителя</h3>
+        <p>Таблицы подстановок определяют группу поддержки по параметрам обращения. Внутри группы — по кругу, по наименьшей загрузке или случайно.</p>
+      </article>
+      <article class="aw reveal">
+        <span class="ic-sq"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span>
+        <h3>Контроль SLA и OLA</h3>
+        <p>Цели обслуживания с контрольными точками и эскалацией. В очереди дел крайний срок подсвечивается цветом: зелёный, жёлтый, оранжевый, красный.</p>
+      </article>
+      <article class="aw reveal">
+        <span class="ic-sq"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v10H9l-4 4z M9 9h6 M9 12h4"/></svg></span>
+        <h3>Портал, чат-бот и Telegram</h3>
+        <p>Регистрация запросов из каталога, статусы по текущим обращениям, поиск решений в базе знаний. Если подходящего типового обращения нет — вопрос оператору.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section class="section pg-res" aria-labelledby="res-title">
+  <div class="wrap pg-res__grid">
+    <div class="reveal">
+      <span class="kicker">Результат</span>
+      <h2 id="res-title" class="h2">Что это даёт <span class="grad">ИТ&#8209;службе</span></h2>
+      <p class="muted pg-res__lead">Типовые запросы перестают отнимать время у&nbsp;инженеров, а&nbsp;пользователи получают понятный сервис с&nbsp;предсказуемыми сроками.</p>
+      <div class="nocode">
+        <p class="nocode__t">Настраивается без программирования</p>
+        <ul class="tags">
+          <li class="tag">цели обслуживания</li>
+          <li class="tag">схемы согласований</li>
+          <li class="tag">маршрутные карты</li>
+          <li class="tag">таблицы подстановок</li>
+          <li class="tag">шаблоны объектов</li>
+        </ul>
+      </div>
+    </div>
+    <ul class="res-list reveal">
+      <li><span class="res-list__n">01</span><div><b>Меньше ручной диспетчеризации</b><p>Исполнитель, согласующие и&nbsp;срок определяются автоматически по&nbsp;типу запроса.</p></div></li>
+      <li><span class="res-list__n">02</span><div><b>Сроки под контролем до&nbsp;нарушения</b><p>Исполнители получают уведомления о&nbsp;приближении контрольных точек SLA и&nbsp;OLA.</p></div></li>
+      <li><span class="res-list__n">03</span><div><b>Меньше звонков «где моя заявка»</b><p>Пользователь видит статус и&nbsp;этапы согласования на&nbsp;портале и&nbsp;в&nbsp;чат-боте.</p></div></li>
+      <li><span class="res-list__n">04</span><div><b>Единый стандарт исполнения</b><p>Один и&nbsp;тот же запрос всегда проходит один и&nbsp;тот же маршрут — независимо от&nbsp;смены и&nbsp;исполнителя.</p></div></li>
+      <li><span class="res-list__n">05</span><div><b>Новые типы запросов без разработки</b><p>Новый тип запроса добавляется в&nbsp;каталог и&nbsp;получает маршрут средствами no-code.</p></div></li>
+      <li><span class="res-list__n">06</span><div><b>Масштабирование на&nbsp;смежные службы</b><p>По той же логике можно автоматизировать заявки АХО, кадров и&nbsp;безопасности.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="section pg-rel" aria-labelledby="rel-title">
+  <div class="wrap">
+    <div class="sec-head sec-head--split reveal">
+      <h2 id="rel-title" class="h2">Связанные процессы</h2>
+      <a class="link-arrow" href="../#modules">Все модули ITSMBox</a>
+    </div>
+    <ul class="rel-grid reveal">
+      <li><a href="../#modules"><span>Service Desk</span><b>Управление инцидентами</b></a></li>
+      <li><a href="../#modules"><span>ИТ-услуги</span><b>Каталог услуг</b></a></li>
+      <li><a href="../#modules"><span>ИТ-услуги</span><b>Управление уровнем сервиса</b></a></li>
+      <li><a href="../#modules"><span>Service Desk</span><b>Портал пользователей</b></a></li>
+      <li><a href="../#modules"><span>Service Desk</span><b>База знаний</b></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section pg-faq" id="faq" aria-labelledby="faq-title">
+  <div class="wrap pg-faq__grid">
+    <div class="reveal">
+      <span class="kicker">FAQ</span>
+      <h2 id="faq-title" class="h2">Вопросы и&nbsp;ответы</h2>
+    </div>
+    <div class="faq reveal">
+      <details open>
+        <summary>Чем запрос на обслуживание отличается от инцидента?</summary>
+        <p>Инцидент — незапланированное прерывание или снижение качества услуги, его нужно устранить. Запрос на обслуживание — заранее предусмотренная просьба пользователя: выдать доступ, оборудование, установить ПО или дать информацию. Сбоя нет, есть типовая услуга, которую нужно выполнить.</p>
+      </details>
+      <details>
+        <summary>Нужен ли каталог услуг для управления запросами?</summary>
+        <p>Да. Каталог определяет, какие запросы можно подать, какие данные для них нужны, кто согласует и кто исполняет. Без каталога запросы приходят в свободной форме, и их приходится разбирать вручную.</p>
+      </details>
+      <details>
+        <summary>Можно ли настроить маршруты и согласования в ITSMBox без программирования?</summary>
+        <p>Да. Маршрутные карты, схемы согласований, цели обслуживания, таблицы подстановок и шаблоны регистрации настраиваются no-code-инструментами, без разработки бизнес-процессов.</p>
+      </details>
+      <details>
+        <summary>Через какие каналы пользователи подают запросы в ITSMBox?</summary>
+        <p>Через портал самообслуживания и каталог типовых обращений, из карточки статьи базы знаний, через чат-бот, в том числе в Telegram. Специалисты поддержки также могут зарегистрировать обращение за пользователя.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta section" id="form" aria-labelledby="cta-title">
+  <div class="gridlines" aria-hidden="true"></div>
+  <div class="wrap cta__grid">
+    <div class="cta__copy reveal">
+      <span class="kicker">Демо ITSMBox</span>
+      <h2 id="cta-title" class="h2">Покажем управление запросами <span class="grad">на&nbsp;ваших сценариях</span></h2>
+      <p class="muted">Соберём каталог из&nbsp;ваших типовых запросов, покажем маршруты, согласования и&nbsp;контроль SLA.</p>
+      <ul class="checks">
+        <li>Разбор ваших типовых запросов и&nbsp;маршрутов</li>
+        <li>Демонстрация портала, каталога и&nbsp;чат-бота</li>
+        <li>Варианты размещения: Cloud или On-Premises</li>
+      </ul>
+      <img class="cta__glass" src="../assets/img/gen-glass-small.webp" width="1400" height="933" alt="" loading="lazy">
+    </div>
+    <form class="form reveal" novalidate>
+      <div class="form__seg" role="radiogroup" aria-label="Что вас интересует">
+        <label><input type="radio" name="interest" value="demo" checked><span>Демо</span></label>
+        <label><input type="radio" name="interest" value="modules"><span>Подбор модулей</span></label>
+        <label><input type="radio" name="interest" value="consult"><span>Консультация</span></label>
+      </div>
+      <div class="form__row">
+        <label class="field"><span>Имя</span><input name="name" autocomplete="name" required></label>
+        <label class="field"><span>Компания</span><input name="company" autocomplete="organization" required></label>
+      </div>
+      <div class="form__row">
+        <label class="field"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" required></label>
+        <label class="field"><span>Рабочий email</span><input name="email" type="email" autocomplete="email" required></label>
+      </div>
+      <label class="field"><span>Комментарий</span><textarea name="comment" rows="3" placeholder="Например: 300 типовых запросов в месяц, согласования идут по почте"></textarea></label>
+      <input type="hidden" name="page" value="upravlenie-zaprosami">
+      <label class="consent"><input type="checkbox" name="consent" required><span>Соглашаюсь с политикой обработки персональных данных</span></label>
+      <button class="btn btn--primary btn--block" type="submit">Отправить заявку <svg class="i-arr" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5 15.5 10 11 14.5"/></svg></button>
+      <p class="form__msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <div class="ftr__brand">
+      <span class="brand__product">ITSM<b>Box</b></span>
+      <p>ITSM&#8209;платформа от IT Expert на базе BPMSoft</p>
+    </div>
+    <nav class="ftr__nav" aria-label="Разделы в подвале">
+      <a href="../#modules">Модули</a><a href="../#ai">ИИ</a><a href="../#why">Почему ITSMBox</a><a href="../#cases">Кейсы</a><a href="../#awards">Награды</a><a href="#form">Получить демо</a>
+    </nav>
+    <div class="ftr__contacts">
+      <a href="tel:+74950700997">+7 495 070 09 97</a>
+      <a href="mailto:info@bpmsoft.ru">info@bpmsoft.ru</a>
+    </div>
+  </div>
+  <div class="wrap ftr__legal"><span>© 2026 BPMSoft</span><span>Политика обработки персональных данных</span></div>
+</footer>
+
+<script src="../page.js"></script>
+</body>
+</html>
