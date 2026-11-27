@@ -579,19 +579,11 @@ ul{list-style:none}
 .res-list b{display:block;font-size:18.5px;line-height:1.3;margin-bottom:4px}
 .res-list p{font-size:15.5px;color:var(--muted)}
 
-.pg-rel{background:var(--bg);padding-block:clamp(64px,7vw,96px)}
-.pg-rel .sec-head{margin-bottom:28px}
-.rel-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-.rel-grid a{display:grid;gap:6px;height:100%;padding:20px;border-radius:18px;background:#fff;border:1px solid var(--line);transition:border-color .25s,transform .25s,box-shadow .25s}
-.rel-grid a:hover{border-color:#f3d3bf;transform:translateY(-3px);box-shadow:0 20px 40px -28px rgba(235,96,18,.5)}
-.rel-grid span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.rel-grid b{font-size:16.5px;line-height:1.3}
-.rel-grid b::after{content:" →";color:var(--orange)}
 
-.pg-faq{background:#fff}
+.pg-faq{background:var(--bg)}
 .pg-faq__grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(32px,5vw,80px);align-items:start}
 .faq{display:grid;gap:10px}
-.faq details{border:1px solid var(--line);border-radius:18px;background:var(--bg);transition:background .25s,border-color .25s}
+.faq details{border:1px solid var(--line);border-radius:18px;background:#fff;transition:background .25s,border-color .25s}
 .faq details[open]{background:#fff;border-color:#f3d3bf;box-shadow:var(--shadow)}
 .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:20px 22px;font-weight:600;font-size:17px;line-height:1.35}
 .faq summary::-webkit-details-marker{display:none}
@@ -604,9 +596,6 @@ ul{list-style:none}
 .fn__more:hover{text-decoration:underline;text-underline-offset:3px}
 .fn-list li:has(.fn.is-active) .fn__more{display:inline-flex}
 
-@media (max-width:1100px){
-  .rel-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
 @media (max-width:960px){
   .pg-article__grid,.steps,.pg-res__grid,.pg-faq__grid{grid-template-columns:1fr}
   .toc{display:none}
@@ -614,7 +603,7 @@ ul{list-style:none}
   .feat-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:640px){
-  .vs,.ex-grid,.feat-grid,.rel-grid{grid-template-columns:1fr}
+  .vs,.ex-grid,.feat-grid{grid-template-columns:1fr}
   .prose p{font-size:16px}
   .quote{padding:18px 20px}
   .quote p{font-size:16.5px}
